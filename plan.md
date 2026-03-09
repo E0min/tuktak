@@ -84,7 +84,7 @@
         - [x] 7.2.2.1 클러스터링된 루트들에 대해 서버 API를 호출하여 실제 주행 경로 데이터 확보 (`use-simulation.ts`)
         - [x] 7.2.2.2 응답 데이터(path, distance, duration)를 `Route` 인터페이스 규격으로 변환 및 매핑
 - [ ] 7.3 UI/UX 시각화 정교화
-    - [ ] 7.3.1 경로별 스타일 차별화
-        - [ ] 7.3.1.1 `map-utils.ts`의 `drawPath` 함수를 보완하여 직선(Before)과 도로(After) 스타일 명확히 구분
-        - [ ] 7.3.1.2 API 호출 대기 중 '분석 중' 로딩 인디케이터 상태 연동 고도화
+    - [x] 7.3.1 경로별 스타일 차별화
+        - [x] 7.3.1.1 `map-utils.ts`의 `drawPath` 함수를 보완하여 직선(Before)과 도로(After) 스타일 명확히 구분
+        - [x] 7.3.1.2 `SimulatorPage`에서 시뮬레이션 결과(Route) 렌더링 로직 통합
 

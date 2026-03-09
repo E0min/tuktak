@@ -41,8 +41,8 @@ export function drawPath(
   if (!window.naver || !map || path.length < 2) return null;
 
   const color = type === "Bundled" ? "#10b981" : "#6366f1"; // 에메랄드(Emerald-500) vs 인디고(Indigo-500)
-  const opacity = type === "Bundled" ? 0.9 : 0.4;
-  const strokeWeight = type === "Bundled" ? 5 : 3;
+  const opacity = type === "Bundled" ? 0.9 : 0.2; // After는 진하게, Before는 아주 연하게
+  const strokeWeight = type === "Bundled" ? 5 : 2;
 
   return new window.naver.maps.Polyline({
     map: map,
@@ -52,5 +52,7 @@ export function drawPath(
     strokeWeight: strokeWeight,
     strokeLineCap: "round",
     strokeLineJoin: "round",
+    // Before 모드일 경우 점선(Dash) 효과 고려 가능
+    strokeStyle: type === "Individual" ? "shortdash" : "solid",
   });
 }
