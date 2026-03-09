@@ -70,3 +70,9 @@
     - [x] 4.3.2 페이지 조립 및 엔트리 포인트 (`index.tsx`)
         - [x] 4.3.2.1 `SimulatorPage` 컴포넌트에서 지도와 대시보드 결합
         - [x] 4.3.2.2 `app/page.tsx`에서 `features/simulator`를 불러와 최종 화면 구성
+
+## 5. 긴급 수정 및 안정화 (Hotfix)
+- [x] 5.1 빌드 오류 수정 (Module not found)
+    - [x] 5.1.1 Dashboard 컴포넌트 참조 경로 수정
+        - [x] 5.1.1.1 `src/features/simulator/index.tsx` 내 Dashboard 임포트 경로를 `./components/dashboard`로 수정
+

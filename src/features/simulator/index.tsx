@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import NaverMap from "./components/naver-map";
-import Dashboard from "./dashboard"; // 오타 수정 가능성 대비 (원래 컴포넌트명 Dashboard)
+import Dashboard from "./components/dashboard";
 import KPICard from "./components/kpi-card";
 import ControlPanel from "./components/control-panel";
 import { useNaverMap } from "./hooks/use-naver-map";
