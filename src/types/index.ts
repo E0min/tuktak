@@ -39,9 +39,22 @@ export interface Order {
   id: string;
   pickup: Coordinate;
   dropoff: Coordinate;
+  pickupAddress?: string; // 상차지 상세 주소
+  dropoffAddress?: string; // 하차지 상세 주소
   cargo: Cargo;
   timeWindow: TimeWindow;
   basePrice: number; // 단독 배송 시 기본 운임
+  actualDistance?: number; // 네이버 API 실제 주행 거리 (meters)
+  actualDuration?: number; // 네이버 API 실제 소요 시간 (seconds)
+}
+
+/**
+ * 최적 방문 순서 포인트
+ */
+export interface SequencePoint {
+  id: string;
+  type: "Pickup" | "Dropoff";
+  coordinate: Coordinate;
 }
 
 /**
@@ -54,6 +67,7 @@ export interface Route {
   totalTime: number; // 총 소요 시간 (seconds)
   pathPoints: Coordinate[]; // 지도 렌더링을 위한 경로 좌표 배열
   type: "Individual" | "Bundled";
+  optimalSequence?: SequencePoint[]; // 최적 방문 순서
 }
 
 /**

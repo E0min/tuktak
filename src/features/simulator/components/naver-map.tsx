@@ -6,47 +6,64 @@ interface NaverMapProps {
   center?: { lat: number; lng: number };
   zoom?: number;
   className?: string;
-  onMapLoad?: (map: any) => void;
+  onMapLoad?: (map: naver.maps.Map) => void;
 }
 
 /**
- * 네이버 지도 베이스 컴포넌트 (4.1.1)
- * layout.tsx에서 로드된 네이버 지도 SDK를 사용하여 지도를 초기화합니다.
+ * 네이버 지도 베이스 컴포넌트
+ * SDK 로딩 시점을 고려하여 window.naver 객체가 준비될 때까지 재시도합니다.
  */
 export default function NaverMap({
-  center = { lat: 37.5665, lng: 126.978 }, // 서울 중심
+  center = { lat: 37.5665, lng: 126.978 },
   zoom = 11,
   className = "w-full h-full",
   onMapLoad,
 }: NaverMapProps) {
   const mapElement = useRef<HTMLDivElement>(null);
-  const [mapInstance, setMapInstance] = useState<any>(null);
+  const [isSdkLoaded, setIsSdkLoaded] = useState(false);
 
+  // 1. SDK 로드 상태 감시 (Polling)
   useEffect(() => {
-    if (!mapElement.current || !window.naver) return;
+    if (window.naver && window.naver.maps) {
+      setIsSdkLoaded(true);
+      return;
+    }
 
-    // 지도 옵션 설정
+    const interval = setInterval(() => {
+      if (window.naver && window.naver.maps) {
+        setIsSdkLoaded(true);
+        clearInterval(interval);
+      }
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // 2. SDK 로드 완료 후 지도 초기화
+  useEffect(() => {
+    if (!isSdkLoaded || !mapElement.current || !window.naver) return;
+
     const mapOptions = {
       center: new window.naver.maps.LatLng(center.lat, center.lng),
       zoom: zoom,
-      zoomControl: true,
+      zoomControl: false,
       zoomControlOptions: {
-        position: window.naver.maps.Position.TOP_RIGHT,
+        position: window.naver.maps.Position.TOP_LEFT,
       },
     };
 
-    // 지도 인스턴스 생성
     const map = new window.naver.maps.Map(mapElement.current, mapOptions);
-    setMapInstance(map);
 
     if (onMapLoad) {
       onMapLoad(map);
     }
+  }, [isSdkLoaded]); // SDK 로드 완료 시 실행
 
-    return () => {
-      // 컴포넌트 언마운트 시 정리 로직이 필요할 경우 추가
-    };
-  }, []); // 초기 로드 시 1회 실행
-
-  return <div ref={mapElement} className={className} />;
+  return (
+    <div 
+      ref={mapElement} 
+      className={className} 
+      style={{ width: "100%", height: "100vh" }} 
+    />
+  );
 }

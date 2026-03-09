@@ -2,8 +2,21 @@
  * 내장 API Route Handler를 통해 네이버 Directions 5 API를 호출하는 서비스
  */
 
+export interface DirectionSummary {
+  distance: number;
+  duration: number;
+  bbox: number[][];
+}
+
+export interface DirectionRoute {
+  summary: DirectionSummary;
+  path: [number, number][];
+}
+
 interface DirectionResponse {
-  route: any;
+  route: {
+    traoptimal: DirectionRoute[];
+  };
   code: number;
   message: string;
 }

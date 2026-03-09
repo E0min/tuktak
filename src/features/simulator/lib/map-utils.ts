@@ -5,13 +5,15 @@ import { Coordinate } from "../../../types";
  * @param map 네이버 지도 인스턴스
  * @param position 좌표
  * @param type 상차(Pickup) 또는 하차(Dropoff)
+ * @param index 방문 순서 번호 (선택)
  */
 export function createMarker(
-  map: any,
+  map: naver.maps.Map,
   position: Coordinate,
   type: "Pickup" | "Dropoff",
-) {
-  if (!window.naver || !map) return null;
+  index?: number
+): naver.maps.Marker | null {
+  if (!window.naver || !window.naver.maps || !map) return null;
 
   const color = type === "Pickup" ? "#fbbf24" : "#3b82f6"; // 주황(Amber-400) vs 파랑(Blue-500)
   
@@ -20,10 +22,16 @@ export function createMarker(
     map: map,
     icon: {
       content: `
-        <div style="width: 12px; height: 12px; background-color: ${color}; border: 2px solid white; border-radius: 50%; box-shadow: 0 0 5px rgba(0,0,0,0.3);"></div>
+        <div style="position: relative; display: flex; align-items: center; justify-content: center;">
+          <div style="width: 24px; height: 24px; background-color: ${color}; border: 2px solid white; border-radius: 50%; box-shadow: 0 0 8px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center;">
+            <span style="color: white; font-size: 12px; font-weight: 900; font-family: sans-serif;">${index || ""}</span>
+          </div>
+          <div style="position: absolute; bottom: -5px; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid white;"></div>
+        </div>
       `,
-      anchor: new window.naver.maps.Point(6, 6),
+      anchor: new window.naver.maps.Point(12, 24),
     },
+    zIndex: index ? 1000 + index : 100,
   });
 }
 
@@ -34,11 +42,11 @@ export function createMarker(
  * @param type 개별(Individual) 또는 합짐(Bundled)
  */
 export function drawPath(
-  map: any,
+  map: naver.maps.Map,
   path: Coordinate[],
   type: "Individual" | "Bundled",
-) {
-  if (!window.naver || !map || path.length < 2) return null;
+): naver.maps.Polyline | null {
+  if (!window.naver || !window.naver.maps || !map || path.length < 2) return null;
 
   const color = type === "Bundled" ? "#10b981" : "#6366f1"; // 에메랄드(Emerald-500) vs 인디고(Indigo-500)
   const opacity = type === "Bundled" ? 0.9 : 0.2; // After는 진하게, Before는 아주 연하게

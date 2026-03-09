@@ -61,6 +61,33 @@ function getRandomTimeWindow(): TimeWindow {
 }
 
 /**
+ * 좌표 기반 사실적인 서울 주소 생성 (12.1)
+ */
+const SEOUL_DISTRICTS = [
+  { name: "강남구", dongs: ["역삼동", "삼성동", "논현동", "신사동", "도곡동"], lat: [37.46, 37.52], lng: [127.02, 127.10] },
+  { name: "서초구", dongs: ["서초동", "반포동", "방배동", "양재동"], lat: [37.43, 37.51], lng: [126.98, 127.06] },
+  { name: "송파구", dongs: ["잠실동", "가락동", "문정동", "방이동"], lat: [37.47, 37.54], lng: [127.08, 127.17] },
+  { name: "마포구", dongs: ["서교동", "상암동", "합정동", "공덕동"], lat: [37.53, 37.58], lng: [126.88, 126.96] },
+  { name: "용산구", dongs: ["한남동", "이태원동", "이촌동", "원효로"], lat: [37.51, 37.55], lng: [126.95, 127.01] },
+  { name: "영등포구", dongs: ["여의도동", "당산동", "문래동", "신길동"], lat: [37.48, 37.55], lng: [126.88, 126.94] },
+  { name: "성동구", dongs: ["성수동", "옥수동", "금호동", "행당동"], lat: [37.53, 37.57], lng: [127.02, 127.08] },
+  { name: "강서구", dongs: ["화곡동", "가양동", "마곡동", "방화동"], lat: [37.53, 37.59], lng: [126.78, 126.86] },
+];
+
+function getAddressFromCoords(coord: Coordinate): string {
+  // 좌표 범위에 맞는 구 찾기
+  const district = SEOUL_DISTRICTS.find(d => 
+    coord.lat >= d.lat[0] && coord.lat <= d.lat[1] && 
+    coord.lng >= d.lng[0] && coord.lng <= d.lng[1]
+  ) || SEOUL_DISTRICTS[Math.floor(Math.random() * SEOUL_DISTRICTS.length)]; // 못 찾으면 랜덤
+
+  const dong = district.dongs[Math.floor(Math.random() * district.dongs.length)];
+  const buildingNum = Math.floor(Math.random() * 150) + 1;
+  
+  return `서울특별시 ${district.name} ${dong} ${buildingNum}번지`;
+}
+
+/**
  * 100개 랜덤 배차 콜 생성 엔진 (2.2.2)
  */
 export function generateMockOrders(count: number = 100): Order[] {
@@ -76,6 +103,8 @@ export function generateMockOrders(count: number = 100): Order[] {
       id: `ORDER-${(i + 1).toString().padStart(3, "0")}`,
       pickup,
       dropoff,
+      pickupAddress: getAddressFromCoords(pickup),
+      dropoffAddress: getAddressFromCoords(dropoff),
       cargo: getRandomCargo(),
       timeWindow: getRandomTimeWindow(),
       basePrice,

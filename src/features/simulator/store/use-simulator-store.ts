@@ -9,10 +9,14 @@ interface SimulatorState {
   individualRoutes: Route[];
   bundledRoutes: Route[];
   metrics: KPIMetrics | null;
+  isRouteListOpen: boolean;
+  selectedRouteId: string | null;
   
   // Actions
   setStatus: (status: SimulatorStatus) => void;
   setOrders: (orders: Order[]) => void;
+  setIsRouteListOpen: (open: boolean) => void;
+  setSelectedRouteId: (id: string | null) => void;
   setSimulationResults: (
     individual: Route[],
     bundled: Route[],
@@ -30,9 +34,13 @@ export const useSimulatorStore = create<SimulatorState>((set) => ({
   individualRoutes: [],
   bundledRoutes: [],
   metrics: null,
+  isRouteListOpen: false,
+  selectedRouteId: null,
 
   setStatus: (status) => set({ status }),
   setOrders: (orders) => set({ orders }),
+  setIsRouteListOpen: (open) => set({ isRouteListOpen: open }),
+  setSelectedRouteId: (id) => set({ selectedRouteId: id }),
   setSimulationResults: (individual, bundled, metrics) =>
     set({
       individualRoutes: individual,
@@ -47,5 +55,7 @@ export const useSimulatorStore = create<SimulatorState>((set) => ({
       individualRoutes: [],
       bundledRoutes: [],
       metrics: null,
+      isRouteListOpen: false,
+      selectedRouteId: null,
     }),
 }));

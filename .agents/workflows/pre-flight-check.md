@@ -12,7 +12,7 @@ description: 작업 시작 전 DOCS 지침 확인 및 환경 점검 워크플로
 3.  **다음 단계 연계:** 
     - 모든 계획 수립 시 [/docs-adherence](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/docs-adherence.md) 및 [/plan-mode](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/plan-mode.md)를 참조하여 `plan.md`에 4단계 계획을 수립합니다.
     - 프론트엔드 UI 작업 시 [/vercel-best-practices](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/vercel-best-practices.md)를 연이어 실행합니다.
-    - 코드 변경 시 [/doc-sync](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/doc-sync.md) 및 [/workflow-sync](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/workflow-sync.md) 워크플로우를 통해 산출물 및 워크플로우를 최신화합니다.
+    - 코드 변경 시 [/doc-sync](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/doc-sync.md) 및 [/system-arch-sync](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/system-arch-sync.md), [/handover-sync](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/handover-sync.md), [/workflow-sync](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/workflow-sync.md) 워크플로우를 통해 산출물 및 워크플로우를 최신화합니다.
 4.  **상태 보고:** `task.md`를 생성하거나 업데이트할 때 "DOCS 지침 확인 완료" 항목을 체크하여 사용자에게 점검 완료를 알립니다.
 5.  **일관성 검증:** 계획 단계(Planning)에서 로드된 지침들과 계획이 일치하는지 자가 진단합니다.
 

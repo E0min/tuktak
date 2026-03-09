@@ -10,7 +10,7 @@
 
 ## 2. 작업 프로세스
 1. **분석 및 사전 점검:** [/pre-flight-check](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/pre-flight-check.md)를 통해 지침을 로드하고 준수 여부를 확인합니다.
-2. **지침 동기화:** 코드 변경 시 [/docs-adherence](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/docs-adherence.md), [/doc-sync](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/doc-sync.md), [/workflow-sync](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/workflow-sync.md) 워크플로우를 실행하여 문서와 실행 지침을 모두 최신화합니다.
+2. **지침 동기화:** 코드 변경 시 [/docs-adherence](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/docs-adherence.md), [/doc-sync](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/doc-sync.md), [/system-arch-sync](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/system-arch-sync.md), [/handover-sync](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/handover-sync.md), [/workflow-sync](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/workflow-sync.md) 워크플로우를 실행하여 문서와 실행 지침을 모두 최신화합니다. 특히 시스템 구조 변화 시 `05_System_Architecture` 업데이트는 필수입니다.
 3. **계획 (Planning Mode):** 
     - 사용자가 "구현해줘"라고 하기 전까지는 항상 계획 모드입니다.
     - 모든 작업은 `plan.md`에 `N.N.N.N` (4단계) 수준으로 세분화하며, 모든 단계에 체크박스(`- [ ]`)를 포함합니다.

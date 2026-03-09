@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const CLIENT_ID = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
-const CLIENT_SECRET = process.env.NAVER_MAP_CLIENT_SECRET;
-
 /**
- * 네이버 Directions API 프록시 핸들러 (7.1.1)
- * 클라이언트의 CORS 문제를 해결하고 API Secret을 보호합니다.
+ * 네이버 Directions 5 API 프록시 핸들러 (공식 문서 curl 예시 100% 복제 버전)
  */
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -13,22 +9,23 @@ export async function GET(request: NextRequest) {
   const goal = searchParams.get("goal");
   const waypoints = searchParams.get("waypoints");
 
+  // 환경 변수를 핸들러 내부에서 매번 읽어 오버헤드 방지 및 최신화 보장
+  const clientId = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID?.trim();
+  const clientSecret = process.env.NAVER_MAP_CLIENT_SECRET?.trim();
+
   if (!start || !goal) {
-    return NextResponse.json(
-      { message: "시작점과 도착점 좌표가 필요합니다." },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Missing parameters" }, { status: 400 });
   }
 
-  if (!CLIENT_ID || !CLIENT_SECRET) {
-    return NextResponse.json(
-      { message: "서버 API Key 설정이 누락되었습니다." },
-      { status: 500 }
-    );
+  if (!clientId || !clientSecret) {
+    return NextResponse.json({ error: "Missing API keys in server" }, { status: 500 });
   }
 
-  let url = `https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=${start}&goal=${goal}`;
+  // 공식 문서 curl 예시 주소: https://maps.apigw.ntruss.com/map-direction/v1/driving
+  let url = `https://maps.apigw.ntruss.com/map-direction/v1/driving?start=${start}&goal=${goal}&option=traoptimal`;
+  
   if (waypoints) {
+    // 파이프(|) 기호가 포함된 waypoints를 안전하게 인코딩 (필요 시)
     url += `&waypoints=${waypoints}`;
   }
 
@@ -36,21 +33,29 @@ export async function GET(request: NextRequest) {
     const response = await fetch(url, {
       method: "GET",
       headers: {
-        "X-NCP-APIGW-API-KEY-ID": CLIENT_ID,
-        "X-NCP-APIGW-API-KEY": CLIENT_SECRET,
+        // 공식 문서 curl 예시의 소문자 헤더 규격 준수
+        "x-ncp-apigw-api-key-id": clientId,
+        "x-ncp-apigw-api-key": clientSecret,
+        "Accept": "application/json",
       },
+      cache: "no-store",
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      throw new Error(`Naver API error: ${response.status}`);
+      return NextResponse.json(
+        { 
+          error: "Naver API 401 Unauthorized", 
+          naver_response: data 
+        },
+        { status: response.status }
+      );
     }
 
-    const data = await response.json();
     return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json(
-      { message: "네이버 API 호출 중 오류가 발생했습니다." },
-      { status: 500 }
-    );
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    return NextResponse.json({ error: "Server Fetch Error", message }, { status: 500 });
   }
 }

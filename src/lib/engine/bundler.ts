@@ -1,4 +1,4 @@
-import { Order, Coordinate } from "@/types";
+import { Order, Coordinate, SequencePoint } from "@/types";
 import { getHaversineDistance } from "@/lib/engine/calculator";
 
 /**
@@ -90,4 +90,63 @@ export function runBasicBundling(orders: Order[]): Order[][] {
   }
 
   return bundles;
+}
+
+/**
+ * 묶인 오더들의 최적 상/하차 순서를 결정합니다. (11.1)
+ * "상-상-하-하" 뿐만 아니라 "상-하-상-하" 등 모든 가능성을 검토하여 최단 경로를 산출합니다.
+ */
+export function findOptimalSequence(orders: Order[]): SequencePoint[] {
+  const points: SequencePoint[] = [];
+  orders.forEach(o => {
+    points.push({ id: o.id, type: "Pickup", coordinate: o.pickup });
+    points.push({ id: o.id, type: "Dropoff", coordinate: o.dropoff });
+  });
+
+  // 순열(Permutation) 생성을 통한 완전 탐색 (주문 수가 적으므로 가능, 최대 3개 주문=6개 지점)
+  let minDistance = Infinity;
+  let optimalPath: SequencePoint[] = [];
+
+  function permute(currentPath: SequencePoint[], remainingPoints: SequencePoint[]) {
+    if (remainingPoints.length === 0) {
+      const distance = calculatePathDistance(currentPath);
+      if (distance < minDistance) {
+        minDistance = distance;
+        optimalPath = [...currentPath];
+      }
+      return;
+    }
+
+    for (let i = 0; i < remainingPoints.length; i++) {
+      const nextPoint = remainingPoints[i];
+      
+      // 제약 조건: 하차(Dropoff)는 반드시 해당 주문의 상차(Pickup) 이후에만 가능
+      if (nextPoint.type === "Dropoff") {
+        const hasPickedUp = currentPath.some(p => p.id === nextPoint.id && p.type === "Pickup");
+        if (!hasPickedUp) continue;
+      }
+
+      const newPath = [...currentPath, nextPoint];
+      const newRemaining = [...remainingPoints.slice(0, i), ...remainingPoints.slice(i + 1)];
+      permute(newPath, newRemaining);
+    }
+  }
+
+  // 첫 번째 상차지부터 시작 (보통 가장 먼저 싣는 짐 기준)
+  // 모든 상차지를 시작점으로 고려하여 가장 짧은 경로 선택
+  const pickups = points.filter(p => p.type === "Pickup");
+  pickups.forEach((startPoint, idx) => {
+    const otherPoints = points.filter((_, i) => i !== points.indexOf(startPoint));
+    permute([startPoint], otherPoints);
+  });
+
+  return optimalPath;
+}
+
+function calculatePathDistance(path: SequencePoint[]): number {
+  let total = 0;
+  for (let i = 0; i < path.length - 1; i++) {
+    total += getHaversineDistance(path[i].coordinate, path[i+1].coordinate);
+  }
+  return total;
 }

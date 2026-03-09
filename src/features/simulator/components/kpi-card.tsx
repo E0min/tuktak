@@ -10,6 +10,7 @@ interface KPICardProps {
   subLabel?: string;
   color?: "indigo" | "emerald" | "amber";
   precision?: number;
+  onClick?: () => void;
 }
 
 /**
@@ -23,6 +24,7 @@ export default function KPICard({
   subLabel,
   color = "indigo",
   precision = 0,
+  onClick,
 }: KPICardProps) {
   const count = useSpring(0, {
     mass: 1,
@@ -48,7 +50,12 @@ export default function KPICard({
   };
 
   return (
-    <div className="bg-slate-900/40 border border-slate-800/50 p-4 rounded-xl">
+    <div 
+      onClick={onClick}
+      className={`bg-slate-900/40 border border-slate-800/50 p-4 rounded-xl transition-all ${
+        onClick ? "cursor-pointer hover:bg-slate-800/60 hover:border-slate-700 active:scale-[0.98]" : ""
+      }`}
+    >
       <div className="flex flex-col gap-1">
         <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">
           {label}
