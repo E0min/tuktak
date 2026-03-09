@@ -1,4 +1,4 @@
-import { Coordinate } from "../../types";
+import { Coordinate } from "@/types";
 
 /**
  * 하버사인(Haversine) 공식을 이용한 두 지점 간의 직선 거리 계산 (단위: meters)

@@ -1,5 +1,5 @@
-import { Order, Coordinate } from "../../types";
-import { getHaversineDistance } from "./calculator";
+import { Order, Coordinate } from "@/types";
+import { getHaversineDistance } from "@/lib/engine/calculator";
 
 /**
  * 합짐 가능 여부를 판단하는 하드 제약 조건 (Hard Constraints) 검증

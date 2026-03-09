@@ -1,4 +1,4 @@
-import { generateMockOrders } from "./mock-generator";
+import { generateMockOrders } from "@/lib/data/mock-generator";
 
 /**
  * 생성된 Mock 데이터의 유효성을 검증하는 간단한 테스트 스크립트

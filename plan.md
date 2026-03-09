@@ -71,8 +71,16 @@
         - [x] 4.3.2.1 `SimulatorPage` 컴포넌트에서 지도와 대시보드 결합
         - [x] 4.3.2.2 `app/page.tsx`에서 `features/simulator`를 불러와 최종 화면 구성
 
-## 5. 긴급 수정 및 안정화 (Hotfix)
-- [x] 5.1 빌드 오류 수정 (Module not found)
-    - [x] 5.1.1 Dashboard 컴포넌트 참조 경로 수정
-        - [x] 5.1.1.1 `src/features/simulator/index.tsx` 내 Dashboard 임포트 경로를 `./components/dashboard`로 수정
+## 6. 전체 프로젝트 절대 경로(@/) 리팩토링
+- [x] 6.1 핵심 서비스 및 엔진 리팩토링
+    - [x] 6.1.1 서비스 및 유틸리티 경로 수정
+        - [x] 6.1.1.1 `src/services/naver-direction.ts` 및 `src/lib/engine/*.ts` 내 임포트 경로를 `@/`로 변경
+- [x] 6.2 데이터 및 타입 레이어 리팩토링
+    - [x] 6.2.1 Mock 데이터 엔진 경로 수정
+        - [x] 6.2.1.1 `src/lib/data/*.ts` 내의 타입 및 엔진 참조 경로를 `@/`로 변경
+- [x] 6.3 UI/UX 기능 레이어 리팩토링
+    - [x] 6.3.1 시뮬레이터 기능(Feature) 경로 수정
+        - [x] 6.3.1.1 `src/features/simulator/` 내의 모든 컴포넌트, 훅, 스토어 임포트 경로를 `@/`로 변경
+    - [x] 6.3.2 페이지 엔트리 포인트 수정
+        - [x] 6.3.2.1 `src/app/page.tsx` 및 `layout.tsx` 내의 임포트 경로를 최종 확인 및 수정
 

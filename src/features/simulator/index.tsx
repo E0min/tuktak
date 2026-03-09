@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import NaverMap from "./components/naver-map";
-import Dashboard from "./components/dashboard";
-import KPICard from "./components/kpi-card";
-import ControlPanel from "./components/control-panel";
-import { useNaverMap } from "./hooks/use-naver-map";
-import { useSimulatorStore } from "./store/use-simulator-store";
-import { createMarker } from "./lib/map-utils";
+import NaverMap from "@/features/simulator/components/naver-map";
+import Dashboard from "@/features/simulator/components/dashboard";
+import KPICard from "@/features/simulator/components/kpi-card";
+import ControlPanel from "@/features/simulator/components/control-panel";
+import { useNaverMap } from "@/features/simulator/hooks/use-naver-map";
+import { useSimulatorStore } from "@/features/simulator/store/use-simulator-store";
+import { createMarker } from "@/features/simulator/lib/map-utils";
 
 /**
  * 시뮬레이터 메인 페이지 컴포넌트 (4.3.2.1)

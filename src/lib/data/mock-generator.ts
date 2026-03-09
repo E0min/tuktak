@@ -1,5 +1,5 @@
-import { Coordinate, CargoCategory, Order, Cargo, TimeWindow } from "../../types";
-import { getHaversineDistance, calculateBasePrice } from "../engine/calculator";
+import { Coordinate, CargoCategory, Order, Cargo, TimeWindow } from "@/types";
+import { getHaversineDistance, calculateBasePrice } from "@/lib/engine/calculator";
 
 /**
  * 서울 지역 위경도 범위 (MOCK_DATA_SPEC.md 준수)

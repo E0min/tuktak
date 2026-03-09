@@ -1,8 +1,8 @@
 "use client";
 
-import { useSimulatorStore } from "../store/use-simulator-store";
-import { generateMockOrders } from "../../../lib/data/mock-generator";
-import { runBasicBundling } from "../../../lib/engine/bundler";
+import { useSimulatorStore } from "@/features/simulator/store/use-simulator-store";
+import { generateMockOrders } from "@/lib/data/mock-generator";
+import { runBasicBundling } from "@/lib/engine/bundler";
 
 /**
  * 시뮬레이션 제어 패널 (4.3.1.1)

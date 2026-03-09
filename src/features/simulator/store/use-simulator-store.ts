@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Order, Route, KPIMetrics } from "../../types";
+import { Order, Route, KPIMetrics } from "@/types";
 
 type SimulatorStatus = "IDLE" | "LOADING" | "SIMULATING" | "DONE";
 
