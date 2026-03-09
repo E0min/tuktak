@@ -27,9 +27,9 @@
         - [x] 2.1.1.3 `Route` 인터페이스 (id, orders, totalDistance, totalTime, pathPoints) 정의
         - [x] 2.1.1.4 `KPIMetrics` (totalDistance, fuelCost, carbonEmission, driverProfit) 비교 타입 정의
 - [ ] 2.2 Mock 데이터 생성기 구현 (`src/lib/data/mock-generator.ts`)
-    - [ ] 2.2.1 서울 지역 좌표 및 구역 랜덤화 로직
-        - [ ] 2.2.1.1 `SEOUL_BOUNDS` 상수 정의 (Lat: 37.42~37.70, Lng: 126.75~127.20)
-        - [ ] 2.2.1.2 범위 내 랜덤 좌표 생성 함수 `getRandomCoordinate()` 구현
+    - [x] 2.2.1 서울 지역 좌표 및 구역 랜덤화 로직
+        - [x] 2.2.1.1 `SEOUL_BOUNDS` 상수 정의 (Lat: 37.42~37.70, Lng: 126.75~127.20)
+        - [x] 2.2.1.2 범위 내 랜덤 좌표 생성 함수 `getRandomCoordinate()` 구현
     - [ ] 2.2.2 100개 랜덤 배차 콜(Order) 생성 엔진
         - [ ] 2.2.2.1 `MOCK_DATA_SPEC.md`에 정의된 5개 카테고리별 화물 특성 랜덤화 로직 구현
         - [ ] 2.2.2.2 시간 윈도우 (08:00~18:00 상차, 2~6시간 내 하차) 생성 함수 구현
