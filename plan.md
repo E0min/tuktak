@@ -57,12 +57,12 @@
         - [x] 4.1.2.1 `MOCK_DATA_SPEC.md` 규격에 맞춘 상차(주황색), 하차(파란색) 커스텀 마커 구현 (`lib/map-utils.ts`)
         - [x] 4.1.2.2 `Polyline`을 활용한 개별 배송(남색, 40% 투명도) 및 합짐(에메랄드색) 경로 렌더링
 - [ ] 4.2 프리미엄 대시보드 및 지표 리포트 구현
-    - [ ] 4.2.1 글래스모피즘 기반 레이아웃 (`components/dashboard.tsx`)
-        - [ ] 4.2.1.1 `Slate-950` 배경 및 `backdrop-blur`가 적용된 사이드 패널 UI 구현
-        - [ ] 4.2.1.2 Framer Motion을 활용한 패널 등장/퇴장 애니메이션 적용
-    - [ ] 4.2.2 KPI 카드 및 애니메이션 위젯
-        - [ ] 4.2.2.1 `SIMULATION_METRICS.md` 지표(거리 절감, 수익 등)를 표시하는 `KPICard` 컴포넌트 구현
-        - [ ] 4.2.2.2 `framer-motion`의 `animate` 기능을 활용한 숫자 카운팅 애니메이션 구현
+    - [x] 4.2.1 글래스모피즘 기반 레이아웃 (`components/dashboard.tsx`)
+        - [x] 4.2.1.1 `Slate-950` 배경 및 `backdrop-blur`가 적용된 사이드 패널 UI 구현
+        - [x] 4.2.1.2 Framer Motion을 활용한 패널 등장/퇴장 애니메이션 적용
+    - [x] 4.2.2 KPI 카드 및 애니메이션 위젯
+        - [x] 4.2.2.1 `SIMULATION_METRICS.md` 지표(거리 절감, 수익 등)를 표시하는 `KPICard` 컴포넌트 구현
+        - [x] 4.2.2.2 `framer-motion`의 `animate` 기능을 활용한 숫자 카운팅 애니메이션 구현
 - [ ] 4.3 시뮬레이션 제어 및 상태 관리
     - [ ] 4.3.1 제어 패널 (`components/control-panel.tsx`)
         - [ ] 4.3.1.1 '시뮬레이션 실행', '초기화' 버튼 및 진행 상태(IDLE, LOADING, DONE) 표시
