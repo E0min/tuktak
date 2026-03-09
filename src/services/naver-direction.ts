@@ -21,7 +21,6 @@ export async function getDirection(
   goal: { lat: number; lng: number }
 ): Promise<DirectionResponse | null> {
   if (!CLIENT_ID || !CLIENT_SECRET) {
-    console.error("Naver API Key가 설정되지 않았습니다.");
     return null;
   }
 
@@ -43,7 +42,5 @@ export async function getDirection(
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Naver Direction API 호출 실패:", error);
     return null;
-  }
-}
+  }}

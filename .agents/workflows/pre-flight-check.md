@@ -12,7 +12,7 @@ description: 작업 시작 전 DOCS 지침 확인 및 환경 점검 워크플로
 3.  **다음 단계 연계:** 
     - 모든 계획 수립 시 [/docs-adherence](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/docs-adherence.md) 및 [/plan-mode](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/plan-mode.md)를 참조하여 `plan.md`에 4단계 계획을 수립합니다.
     - 프론트엔드 UI 작업 시 [/vercel-best-practices](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/vercel-best-practices.md)를 연이어 실행합니다.
-    - 코드 변경 시 [/doc-sync](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/doc-sync.md) 워크플로우를 통해 산출물 문서를 최신화합니다.
+    - 코드 변경 시 [/doc-sync](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/doc-sync.md) 및 [/workflow-sync](file:///Users/leeyoungmin/깃허브/tuktak/.agents/workflows/workflow-sync.md) 워크플로우를 통해 산출물 및 워크플로우를 최신화합니다.
 4.  **상태 보고:** `task.md`를 생성하거나 업데이트할 때 "DOCS 지침 확인 완료" 항목을 체크하여 사용자에게 점검 완료를 알립니다.
 5.  **일관성 검증:** 계획 단계(Planning)에서 로드된 지침들과 계획이 일치하는지 자가 진단합니다.
 
@@ -27,8 +27,8 @@ description: 작업 시작 전 DOCS 지침 확인 및 환경 점검 워크플로
 -   **`UI_UX_GUIDELINES.md`**: "Premium Logistics" 컨셉. Slate-950 다크 모드, Indigo/Emerald 액센트, 글래스모피즘.
 
 ### 📁 03_Engineering (엔지니어링 표준)
--   **`AGENT_INSTRUCTIONS.md`**: **에이전트 필수 행동 수칙.** 한국어 주석, 4단계 계획(`plan.md`), `[N.N.N]` 단위 커밋.
--   **`CODE_CONVENTIONS.md`**: TS(PascalCase), kebab-case 컴포넌트, camelCase 변수. 'use client' 지시어 및 Vercel 최적화 준수.
+-   **`AGENT_INSTRUCTIONS.md`**: **에이전트 필수 행동 수칙.** 한국어 주석(이모지 금지), 4단계 계획(`plan.md`), `[N.N.N]` 단위 커밋.
+-   **`CODE_CONVENTIONS.md`**: TS(PascalCase), kebab-case 컴포넌트, camelCase 변수. 콘솔 로그 사용 금지 규칙 포함.
 -   **`GIT_CONVENTIONS.md`**: 한국어 커밋 규칙 (`feat`, `fix`, `docs`, `style`, `refactor`, `chore`).
 -   **`PROJECT_STRUCTURE.md`**: **Thin App Layer 설계.** `app/`은 진입점, 로직은 `features/` 및 `lib/engine/`에 격리. 상향 참조 금지.
 -   **`TDD_MVP_SIMULATOR.md`**: 기술 아키텍처. Naver Maps 비동기 로드, GlobalState 스키마, Route-Second 전략.
