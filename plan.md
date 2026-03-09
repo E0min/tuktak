@@ -10,10 +10,10 @@
         - [x] 1.1.2.1 `eslint.config.mjs`에 명명 규칙(camelCase 등) 관련 규칙 확인 및 보완
         - [x] 1.1.2.2 Prettier 설정 완료 및 `CODE_CONVENTIONS.md` 지침 숙지 완료
 - [ ] 1.2 외부 API 및 SDK 연동 환경 구축
-    - [ ] 1.2.1 네이버 지도 클라이언트 SDK 설정 (`NAVER_MAPS_INTEGRATION.md`)
-        - [ ] 1.2.1.1 `.env.local` 생성 및 `NEXT_PUBLIC_NAVER_MAP_CLIENT_ID` 환경변수 등록
-        - [ ] 1.2.1.2 `src/app/layout.tsx`에 `next/script`를 사용하여 네이버 지도 SDK 비동기 로드 구현
-        - [ ] 1.2.1.3 `window.naver` 타입 확장을 위한 전역 타입 선언 파일 추가 (`src/types/naver-maps.d.ts`)
+    - [x] 1.2.1 네이버 지도 클라이언트 SDK 설정 (`NAVER_MAPS_INTEGRATION.md`)
+        - [x] 1.2.1.1 `.env.local` 생성 및 `NEXT_PUBLIC_NAVER_MAP_CLIENT_ID` 환경변수 등록
+        - [x] 1.2.1.2 `src/app/layout.tsx`에 `next/script`를 사용하여 네이버 지도 SDK 비동기 로드 구현
+        - [x] 1.2.1.3 `window.naver` 타입 확장을 위한 전역 타입 선언 파일 추가 (`src/types/naver-maps.d.ts`)
     - [ ] 1.2.2 네이버 Direction API 서버 연동 준비
         - [ ] 1.2.2.1 서버 사이드 API 호출을 위한 `NAVER_MAP_CLIENT_SECRET` 환경변수 등록
         - [ ] 1.2.2.2 `src/services/naver-direction.ts`에 기본 fetcher 및 에러 핸들링 유틸리티 구현
