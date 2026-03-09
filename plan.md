@@ -43,8 +43,8 @@
     - [x] 3.1.1 하버사인 거리 및 기본 운임 엔진
         - [x] 3.1.1.1 `PRICING_MODEL.md` 기반의 기본 배송 요금 산정 함수 구현 (`src/lib/engine/calculator.ts`)
 - [ ] 3.2 합짐(Bundling) 알고리즘 1차 구현
-    - [ ] 3.2.1 제약 조건 검증 로직
-        - [ ] 3.2.1.1 1톤 적재량 및 시간 윈도우(Hard Constraints) 체크 함수 구현
+    - [x] 3.2.1 제약 조건 검증 로직
+        - [x] 3.2.1.1 1톤 적재량 및 시간 윈도우(Hard Constraints) 체크 함수 구현 (`src/lib/engine/bundler.ts`)
     - [ ] 3.2.2 클러스터링 기반 합짐 시뮬레이터
         - [ ] 3.2.2.1 `ALGORITHM_SPEC.md`의 스코어링 함수($Score$)를 적용한 기초 합짐 엔진
 
