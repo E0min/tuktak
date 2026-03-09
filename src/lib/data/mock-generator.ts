@@ -1,4 +1,5 @@
 import { Coordinate, CargoCategory, Order, Cargo, TimeWindow } from "../../types";
+import { getHaversineDistance, calculateBasePrice } from "../engine/calculator";
 
 /**
  * 서울 지역 위경도 범위 (MOCK_DATA_SPEC.md 준수)
@@ -67,13 +68,17 @@ export function generateMockOrders(count: number = 100): Order[] {
     const pickup = getRandomCoordinate();
     const dropoff = getRandomCoordinate();
 
+    // 직선 거리를 기반으로 기초 운임 산정
+    const distance = getHaversineDistance(pickup, dropoff);
+    const basePrice = calculateBasePrice(distance);
+
     return {
       id: `ORDER-${(i + 1).toString().padStart(3, "0")}`,
       pickup,
       dropoff,
       cargo: getRandomCargo(),
       timeWindow: getRandomTimeWindow(),
-      basePrice: 0, // 3단계에서 PRICING_MODEL에 따라 산정 예정
+      basePrice,
     };
   });
 }
