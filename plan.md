@@ -6,9 +6,9 @@
         - [x] 1.1.1.1 `src/features/simulator` (api, components, hooks, store, types) 폴더 생성
         - [x] 1.1.1.2 `src/components/ui` 및 `src/lib/engine` 폴더 생성
         - [x] 1.1.1.3 `src/services`, `src/types`, `src/hooks` 공통 폴더 생성
-    - [ ] 1.1.2 코드 품질 도구 및 컨벤션 검증 설정
-        - [ ] 1.1.2.1 `eslint.config.mjs`에 명명 규칙(kebab-case 등) 관련 규칙 확인 및 보완
-        - [ ] 1.1.2.2 Prettier 설정 확인 및 `CODE_CONVENTIONS.md`에 정의된 한국어 주석 정책 숙지
+    - [x] 1.1.2 코드 품질 도구 및 컨벤션 검증 설정
+        - [x] 1.1.2.1 `eslint.config.mjs`에 명명 규칙(camelCase 등) 관련 규칙 확인 및 보완
+        - [x] 1.1.2.2 Prettier 설정 완료 및 `CODE_CONVENTIONS.md` 지침 숙지 완료
 - [ ] 1.2 외부 API 및 SDK 연동 환경 구축
     - [ ] 1.2.1 네이버 지도 클라이언트 SDK 설정 (`NAVER_MAPS_INTEGRATION.md`)
         - [ ] 1.2.1.1 `.env.local` 생성 및 `NEXT_PUBLIC_NAVER_MAP_CLIENT_ID` 환경변수 등록
