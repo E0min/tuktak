@@ -1,30 +1,17 @@
 "use client";
 
 import { useSimulatorStore } from "@/features/simulator/store/use-simulator-store";
-import { generateMockOrders } from "@/lib/data/mock-generator";
-import { runBasicBundling } from "@/lib/engine/bundler";
+import { useSimulation } from "@/features/simulator/hooks/use-simulation";
 
 /**
  * 시뮬레이션 제어 패널 (4.3.1.1)
  */
 export default function ControlPanel() {
-  const { status, setStatus, setOrders, reset } = useSimulatorStore();
+  const { status, reset } = useSimulatorStore();
+  const { runSimulation } = useSimulation();
 
   const handleStart = async () => {
-    setStatus("LOADING");
-    
-    // 1. Mock 데이터 생성
-    const orders = generateMockOrders(100);
-    setOrders(orders);
-    
-    setStatus("SIMULATING");
-    
-    // 2. 임시 딜레이 (애니메이션 효과)
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    
-    // 3. 알고리즘 실행 (실제로는 여기서 3단계의 엔진 호출)
-    // 현재는 상태 업데이트만 시뮬레이션
-    setStatus("DONE");
+    await runSimulation();
   };
 
   return (
