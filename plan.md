@@ -21,11 +21,11 @@
 
 ## 2. 핵심 도메인 모델 및 Mock 데이터 엔진 구현
 - [ ] 2.1 데이터 모델링 (Domain Types)
-    - [ ] 2.1.1 핵심 인터페이스 정의 (`src/types/index.ts`)
-        - [ ] 2.1.1.1 `Coordinate` (lat, lng) 및 `Cargo` (type, volume, weight) 타입 정의
-        - [ ] 2.1.1.2 `Order` 인터페이스 (id, pickup/dropoff Coordinate, cargo, timeWindow) 정의
-        - [ ] 2.1.1.3 `Route` 인터페이스 (id, orders, totalDistance, totalTime, pathPoints) 정의
-        - [ ] 2.1.1.4 `KPIMetrics` (totalDistance, fuelCost, carbonEmission, driverProfit) 비교 타입 정의
+    - [x] 2.1.1 핵심 인터페이스 정의 (`src/types/index.ts`)
+        - [x] 2.1.1.1 `Coordinate` (lat, lng) 및 `Cargo` (type, volume, weight) 타입 정의
+        - [x] 2.1.1.2 `Order` 인터페이스 (id, pickup/dropoff Coordinate, cargo, timeWindow) 정의
+        - [x] 2.1.1.3 `Route` 인터페이스 (id, orders, totalDistance, totalTime, pathPoints) 정의
+        - [x] 2.1.1.4 `KPIMetrics` (totalDistance, fuelCost, carbonEmission, driverProfit) 비교 타입 정의
 - [ ] 2.2 Mock 데이터 생성기 구현 (`src/lib/data/mock-generator.ts`)
     - [ ] 2.2.1 서울 지역 좌표 및 구역 랜덤화 로직
         - [ ] 2.2.1.1 `SEOUL_BOUNDS` 상수 정의 (Lat: 37.42~37.70, Lng: 126.75~127.20)
