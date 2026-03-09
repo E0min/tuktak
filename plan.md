@@ -63,10 +63,10 @@
     - [x] 4.2.2 KPI 카드 및 애니메이션 위젯
         - [x] 4.2.2.1 `SIMULATION_METRICS.md` 지표(거리 절감, 수익 등)를 표시하는 `KPICard` 컴포넌트 구현
         - [x] 4.2.2.2 `framer-motion`의 `animate` 기능을 활용한 숫자 카운팅 애니메이션 구현
-- [ ] 4.3 시뮬레이션 제어 및 상태 관리
+- [x] 4.3 시뮬레이션 제어 및 상태 관리
     - [x] 4.3.1 제어 패널 (`components/control-panel.tsx`)
         - [x] 4.3.1.1 '시뮬레이션 실행', '초기화' 버튼 및 진행 상태(IDLE, LOADING, DONE) 표시
         - [x] 4.3.1.2 `Zustand`를 활용한 전역 시뮬레이션 상태 관리 스토어 구현 (`store/use-simulator-store.ts`)
-    - [ ] 4.3.2 페이지 조립 및 엔트리 포인트 (`index.tsx`)
-        - [ ] 4.3.2.1 `SimulatorPage` 컴포넌트에서 지도와 대시보드 결합
-        - [ ] 4.3.2.2 `app/page.tsx`에서 `features/simulator`를 불러와 최종 화면 구성
+    - [x] 4.3.2 페이지 조립 및 엔트리 포인트 (`index.tsx`)
+        - [x] 4.3.2.1 `SimulatorPage` 컴포넌트에서 지도와 대시보드 결합
+        - [x] 4.3.2.2 `app/page.tsx`에서 `features/simulator`를 불러와 최종 화면 구성
