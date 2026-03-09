@@ -1,5 +1,5 @@
 /**
- * Naver Direction 5 API를 호출하기 위한 서비스 유틸리티
+ * 내장 API Route Handler를 통해 네이버 Directions 5 API를 호출하는 서비스
  */
 
 interface DirectionResponse {
@@ -8,39 +8,39 @@ interface DirectionResponse {
   message: string;
 }
 
-const CLIENT_ID = process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID;
-const CLIENT_SECRET = process.env.NAVER_MAP_CLIENT_SECRET;
-
 /**
- * 상차지에서 하차지까지의 실제 주행 경로를 가져옵니다.
+ * 상차지에서 하차지까지의 실제 주행 경로를 가져옵니다. (7.1.1 로직 이관 반영)
  * @param start - 시작 좌표 {lat, lng}
  * @param goal - 도착 좌표 {lat, lng}
+ * @param waypoints - 경유지 좌표 배열 (선택)
  */
 export async function getDirection(
   start: { lat: number; lng: number },
-  goal: { lat: number; lng: number }
+  goal: { lat: number; lng: number },
+  waypoints?: { lat: number; lng: number }[]
 ): Promise<DirectionResponse | null> {
-  if (!CLIENT_ID || !CLIENT_SECRET) {
-    return null;
+  const startParam = `${start.lng},${start.lat}`;
+  const goalParam = `${goal.lng},${goal.lat}`;
+  
+  let url = `/api/directions?start=${startParam}&goal=${goalParam}`;
+  
+  if (waypoints && waypoints.length > 0) {
+    const waypointsParam = waypoints
+      .map((p) => `${p.lng},${p.lat}`)
+      .join("|");
+    url += `&waypoints=${waypointsParam}`;
   }
 
-  const url = `https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=${start.lng},${start.lat}&goal=${goal.lng},${goal.lat}`;
-
   try {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "X-NCP-APIGW-API-KEY-ID": CLIENT_ID,
-        "X-NCP-APIGW-API-KEY": CLIENT_SECRET,
-      },
-    });
+    const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Proxy API error: ${response.status}`);
     }
 
     const data = await response.json();
     return data;
   } catch (error) {
     return null;
-  }}
+  }
+}
