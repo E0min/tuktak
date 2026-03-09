@@ -1,5 +1,5 @@
 import { Coordinate, CargoCategory, Order, Cargo, TimeWindow } from "@/types";
-import { getHaversineDistance, calculateBasePrice } from "@/lib/engine/calculator";
+import { getEstimatedRoadDistance, calculateBasePrice } from "@/lib/engine/calculator";
 
 /**
  * 서울 지역 위경도 범위 (MOCK_DATA_SPEC.md 준수)
@@ -68,9 +68,9 @@ export function generateMockOrders(count: number = 100): Order[] {
     const pickup = getRandomCoordinate();
     const dropoff = getRandomCoordinate();
 
-    // 직선 거리를 기반으로 기초 운임 산정
-    const distance = getHaversineDistance(pickup, dropoff);
-    const basePrice = calculateBasePrice(distance);
+    // 도로 보정 계수가 적용된 예상 주행 거리를 기반으로 기초 운임 산정 (7.2.1.2)
+    const estimatedDistance = getEstimatedRoadDistance(pickup, dropoff);
+    const basePrice = calculateBasePrice(estimatedDistance);
 
     return {
       id: `ORDER-${(i + 1).toString().padStart(3, "0")}`,

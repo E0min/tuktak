@@ -77,9 +77,9 @@
         - [x] 7.1.1.1 `src/app/api/directions/route.ts` 파일 생성 및 네이버 API 호출 로직 이관
         - [x] 7.1.1.2 서버 사이드 환경변수(`NAVER_MAP_CLIENT_SECRET`)를 이용한 인증 처리
 - [ ] 7.2 하이브리드 알고리즘 엔진 고도화
-    - [ ] 7.2.1 'Before' 모드 최적화 (직선 거리 보정)
-        - [ ] 7.2.1.1 `calculator.ts`에 보정 계수(1.3)가 적용된 `getEstimatedRoadDistance` 함수 추가
-        - [ ] 7.2.1.2 보정된 거리를 기반으로 `basePrice` 재산출 및 지도 Polyline 렌더링 연동
+    - [x] 7.2.1 'Before' 모드 최적화 (직선 거리 보정)
+        - [x] 7.2.1.1 `calculator.ts`에 보정 계수(1.3)가 적용된 `getEstimatedRoadDistance` 함수 추가
+        - [x] 7.2.1.2 보정된 거리를 기반으로 `basePrice` 재산출 및 지도 Polyline 렌더링 연동 (mock-generator 적용)
     - [ ] 7.2.2 'After' 모드 네이버 API 연동
         - [ ] 7.2.2.1 클러스터링된 루트들에 대해 서버 API를 호출하여 실제 주행 경로 데이터 확보
         - [ ] 7.2.2.2 응답 데이터(path, distance, duration)를 `Route` 인터페이스 규격으로 변환 및 매핑

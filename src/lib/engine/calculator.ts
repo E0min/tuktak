@@ -20,6 +20,16 @@ export function getHaversineDistance(coord1: Coordinate, coord2: Coordinate): nu
 }
 
 /**
+ * 서울 시내 도로 보정 계수를 적용한 예상 주행 거리 산출 (7.2.1.1)
+ * API 호출량을 줄이기 위해 Before(개별 배송) 산정에 사용합니다.
+ */
+export function getEstimatedRoadDistance(coord1: Coordinate, coord2: Coordinate): number {
+  const straightDistance = getHaversineDistance(coord1, coord2);
+  const CORRECTION_FACTOR = 1.3; // 직선 거리 대비 도로 주행 거리 비율
+  return straightDistance * CORRECTION_FACTOR;
+}
+
+/**
  * PRICING_MODEL.md 기반의 기본 배송 요금 산정 (Before)
  * @param distanceInMeters 주행 거리 (meters)
  * @returns 산정된 운임 (KRW)
