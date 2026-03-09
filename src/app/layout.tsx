@@ -29,10 +29,10 @@ export default function RootLayout({
     <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
-        {/* 네이버 지도 SDK 비동기 로드 */}
+        {/* 네이버 지도 SDK 비동기 로드 전략 수정 및 ID 직접 기입 테스트 */}
         <Script
-          strategy="beforeInteractive"
-          src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${naverClientId}`}
+          strategy="afterInteractive"
+          src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=o0zq3ww3hs`}
         />
       </body>
     </html>

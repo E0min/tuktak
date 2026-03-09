@@ -88,3 +88,8 @@
         - [x] 7.3.1.1 `map-utils.ts`의 `drawPath` 함수를 보완하여 직선(Before)과 도로(After) 스타일 명확히 구분
         - [x] 7.3.1.2 `SimulatorPage`에서 시뮬레이션 결과(Route) 렌더링 로직 통합
 
+## 8. 시스템 안정화 및 환경 설정 보완 (Hotfix)
+- [x] 8.1 네이버 지도 인증 오류 해결 (Error 200)
+    - [x] 8.1.1 SDK 로드 전략 수정 및 ID 직접 기입
+        - [x] 8.1.1.1 `src/app/layout.tsx` 내 `strategy="afterInteractive"` 변경 및 Client ID 하드코딩 테스트 완료
+
