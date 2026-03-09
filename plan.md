@@ -14,10 +14,10 @@
         - [x] 1.2.1.1 `.env.local` 생성 및 `NEXT_PUBLIC_NAVER_MAP_CLIENT_ID` 환경변수 등록
         - [x] 1.2.1.2 `src/app/layout.tsx`에 `next/script`를 사용하여 네이버 지도 SDK 비동기 로드 구현
         - [x] 1.2.1.3 `window.naver` 타입 확장을 위한 전역 타입 선언 파일 추가 (`src/types/naver-maps.d.ts`)
-    - [ ] 1.2.2 네이버 Direction API 서버 연동 준비
-        - [ ] 1.2.2.1 서버 사이드 API 호출을 위한 `NAVER_MAP_CLIENT_SECRET` 환경변수 등록
-        - [ ] 1.2.2.2 `src/services/naver-direction.ts`에 기본 fetcher 및 에러 핸들링 유틸리티 구현
-        - [ ] 1.2.2.3 API 쿼터 초과 대비를 위한 결과값 캐싱 로직 초기 설계 (lib/cache)
+    - [x] 1.2.2 네이버 Direction API 서버 연동 준비
+        - [x] 1.2.2.1 서버 사이드 API 호출을 위한 `NAVER_MAP_CLIENT_SECRET` 환경변수 등록
+        - [x] 1.2.2.2 `src/services/naver-direction.ts`에 기본 fetcher 및 에러 핸들링 유틸리티 구현
+        - [x] 1.2.2.3 API 쿼터 초과 대비를 위한 결과값 캐싱 로직 초기 설계 (src/services 내 구현)
 
 ## 2. 핵심 도메인 모델 및 Mock 데이터 엔진 구현
 - [ ] 2.1 데이터 모델링 (Domain Types)
