@@ -1,4 +1,4 @@
-import { Coordinate, Order } from "@/types";
+import { Coordinate, Order, Route } from "@/types";
 
 /**
  * 하버사인(Haversine) 공식을 이용한 두 지점 간의 직선 거리 계산 (단위: meters)
@@ -60,6 +60,100 @@ export interface RouteEfficiency {
   hourlyProfitAfter: number;
   shipperSavings: number[];
   fuelSavings: number; // 유류비 절감액 (KRW)
+}
+
+/**
+ * 기사 1인당 일일 업무 사이클 기반 마크로 경제성 분석 (14.1)
+ */
+export interface DailyDriverStats {
+  dailyOrders: number;
+  totalDistance: number;
+  deadheadDistance: number;
+  totalRevenue: number;
+  fuelCost: number;
+  waitTime: number;
+  hourlyProfit: number;
+  netProfit: number;
+  // 고도화 추가 지표
+  timeBreakdown: {
+    delivery: number; // 배송 주행 시간 (%)
+    deadhead: number; // 공차 주행 시간 (%)
+    idle: number;     // 대기 시간 (%)
+  };
+  monthlyProjection: number; // 월 예상 추가 수입 (22일 기준)
+}
+
+export function calculateDailyDriverLifeCycle(
+  orders: Order[],
+  bundledRoutes: Route[]
+): { before: DailyDriverStats; after: DailyDriverStats } {
+  const DIESEL_PRICE = 1700;
+  const FUEL_EFFICIENCY = 11;
+  const COMMISSION_RATE = 0.1; // 10% 플랫폼 수수료
+
+  // --- [BEFORE] 시뮬레이션 ---
+  const DRIVER_COUNT_BEFORE = 40;
+  const ordersPerDriverBefore = orders.length / DRIVER_COUNT_BEFORE; 
+  const avgOrderDistance = orders.reduce((sum, o) => sum + (o.actualDistance || 0), 0) / orders.length;
+  const deadheadPerOrderBefore = 20000; 
+  const dailyDistanceBefore = (avgOrderDistance + deadheadPerOrderBefore) * ordersPerDriverBefore;
+  const dailyRevenueBefore = (orders.reduce((sum, o) => sum + o.basePrice, 0) / orders.length) * ordersPerDriverBefore;
+  const dailyFuelBefore = (dailyDistanceBefore / 1000 / FUEL_EFFICIENCY) * DIESEL_PRICE;
+  const netProfitBefore = dailyRevenueBefore * (1 - COMMISSION_RATE) - dailyFuelBefore;
+
+  const deliveryTimeBefore = (avgOrderDistance * ordersPerDriverBefore) / 10; // 36km/h
+  const deadheadTimeBefore = (deadheadPerOrderBefore * ordersPerDriverBefore) / 10;
+  const idleTimeBefore = (45 * 60) * ordersPerDriverBefore; 
+  const totalCycleBefore = deliveryTimeBefore + deadheadTimeBefore + idleTimeBefore;
+
+  const beforeStats: DailyDriverStats = {
+    dailyOrders: ordersPerDriverBefore,
+    totalDistance: dailyDistanceBefore / 1000,
+    deadheadDistance: (deadheadPerOrderBefore * ordersPerDriverBefore) / 1000,
+    totalRevenue: dailyRevenueBefore,
+    fuelCost: dailyFuelBefore,
+    waitTime: idleTimeBefore / 60,
+    hourlyProfit: (netProfitBefore / totalCycleBefore) * 3600,
+    netProfit: netProfitBefore,
+    timeBreakdown: {
+      delivery: (deliveryTimeBefore / totalCycleBefore) * 100,
+      deadhead: (deadheadTimeBefore / totalCycleBefore) * 100,
+      idle: (idleTimeBefore / totalCycleBefore) * 100,
+    },
+    monthlyProjection: netProfitBefore * 22,
+  };
+
+  // --- [AFTER] 시뮬레이션 ---
+  const dailyOrdersAfter = 4.5; 
+  const deadheadPerOrderAfter = 5000; 
+  const dailyDistanceAfter = (avgOrderDistance + deadheadPerOrderAfter) * dailyOrdersAfter;
+  const dailyRevenueAfter = (orders.reduce((sum, o) => sum + o.basePrice, 0) / orders.length * 0.8) * dailyOrdersAfter;
+  const dailyFuelAfter = (dailyDistanceAfter / 1000 / FUEL_EFFICIENCY) * DIESEL_PRICE;
+  const netProfitAfter = dailyRevenueAfter * (1 - COMMISSION_RATE) - dailyFuelAfter;
+
+  const deliveryTimeAfter = (avgOrderDistance * dailyOrdersAfter) / 10;
+  const deadheadTimeAfter = (deadheadPerOrderAfter * dailyOrdersAfter) / 10;
+  const idleTimeAfter = 0; // 합짐 시 대기 소멸
+  const totalCycleAfter = deliveryTimeAfter + deadheadTimeAfter + idleTimeAfter;
+
+  const afterStats: DailyDriverStats = {
+    dailyOrders: dailyOrdersAfter,
+    totalDistance: dailyDistanceAfter / 1000,
+    deadheadDistance: (deadheadPerOrderAfter * dailyOrdersAfter) / 1000,
+    totalRevenue: dailyRevenueAfter,
+    fuelCost: dailyFuelAfter,
+    waitTime: 0,
+    hourlyProfit: (netProfitAfter / totalCycleAfter) * 3600,
+    netProfit: netProfitAfter,
+    timeBreakdown: {
+      delivery: (deliveryTimeAfter / totalCycleAfter) * 100,
+      deadhead: (deadheadTimeAfter / totalCycleAfter) * 100,
+      idle: 0,
+    },
+    monthlyProjection: netProfitAfter * 22,
+  };
+
+  return { before: beforeStats, after: afterStats };
 }
 
 export function calculateRouteEfficiency(

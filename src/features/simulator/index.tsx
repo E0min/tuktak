@@ -7,6 +7,7 @@ import KPICard from "@/features/simulator/components/kpi-card";
 import ControlPanel from "@/features/simulator/components/control-panel";
 import OrderList from "@/features/simulator/components/order-list";
 import RouteList from "@/features/simulator/components/route-list";
+import EfficiencyDashboard from "@/features/simulator/components/efficiency-dashboard";
 import { useNaverMap } from "@/features/simulator/hooks/use-naver-map";
 import { useSimulatorStore } from "@/features/simulator/store/use-simulator-store";
 import { useMapOverlays } from "@/features/simulator/hooks/use-map-overlays";
@@ -25,6 +26,8 @@ export function SimulatorPage() {
     metrics, 
     isRouteListOpen, 
     setIsRouteListOpen,
+    isEfficiencyDashboardOpen,
+    setIsEfficiencyDashboardOpen,
     selectedRouteId
   } = useSimulatorStore();
   
@@ -57,6 +60,13 @@ export function SimulatorPage() {
         routes={bundledRoutes}
         isOpen={isRouteListOpen}
         onClose={() => setIsRouteListOpen(false)}
+      />
+
+      <EfficiencyDashboard
+        orders={orders}
+        routes={bundledRoutes}
+        isOpen={isEfficiencyDashboardOpen}
+        onClose={() => setIsEfficiencyDashboardOpen(false)}
       />
 
       {/* 제어 레이어: 통합 대시보드 */}
@@ -100,6 +110,9 @@ export function SimulatorPage() {
               suffix="%" 
               color="amber" 
               precision={1}
+              onClick={() => {
+                if (status === "DONE") setIsEfficiencyDashboardOpen(true);
+              }}
             />
           </div>
         </section>

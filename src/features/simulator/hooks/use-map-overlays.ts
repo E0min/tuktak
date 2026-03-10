@@ -55,14 +55,20 @@ export function useMapOverlays({
           if (m) newMarkers.push(m);
         });
 
-        // 뷰포트 이동 (패딩 적용)
+        // 뷰포트 이동 (오른쪽 패널 너비 고려하여 fitBounds 사용)
         const bounds = new window.naver.maps.LatLngBounds(
           new window.naver.maps.LatLng(selectedRoute.pathPoints[0].lat, selectedRoute.pathPoints[0].lng),
           new window.naver.maps.LatLng(selectedRoute.pathPoints[0].lat, selectedRoute.pathPoints[0].lng)
         );
         selectedRoute.pathPoints.forEach(pt => bounds.extend(new window.naver.maps.LatLng(pt.lat, pt.lng)));
         
-        map.panToBounds(bounds, { top: 50, right: 480, bottom: 50, left: 50 });
+        // Naver Maps API v3에서 여백은 fitBounds의 두 번째 인자로 전달
+        map.fitBounds(bounds, { 
+          top: 80, 
+          right: 520, // 패널 너비(448px) + 여유 공간
+          bottom: 80, 
+          left: 80 
+        });
       }
     } 
     // 3. 전체 표시 모드
@@ -71,7 +77,13 @@ export function useMapOverlays({
         new window.naver.maps.LatLng(37.42, 126.75),
         new window.naver.maps.LatLng(37.70, 127.20)
       );
-      map.panToBounds(allBounds, { top: 50, right: isRouteListOpen ? 480 : 50, bottom: 50, left: 50 });
+      
+      map.fitBounds(allBounds, { 
+        top: 60, 
+        right: isRouteListOpen ? 520 : 60, 
+        bottom: 60, 
+        left: 60 
+      });
 
       bundledRoutes.forEach((route) => {
         const p = drawPath(map, route.pathPoints, "Bundled");

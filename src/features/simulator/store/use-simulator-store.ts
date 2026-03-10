@@ -10,12 +10,14 @@ interface SimulatorState {
   bundledRoutes: Route[];
   metrics: KPIMetrics | null;
   isRouteListOpen: boolean;
+  isEfficiencyDashboardOpen: boolean;
   selectedRouteId: string | null;
   
   // Actions
   setStatus: (status: SimulatorStatus) => void;
   setOrders: (orders: Order[]) => void;
   setIsRouteListOpen: (open: boolean) => void;
+  setIsEfficiencyDashboardOpen: (open: boolean) => void;
   setSelectedRouteId: (id: string | null) => void;
   setSimulationResults: (
     individual: Route[],
@@ -35,11 +37,13 @@ export const useSimulatorStore = create<SimulatorState>((set) => ({
   bundledRoutes: [],
   metrics: null,
   isRouteListOpen: false,
+  isEfficiencyDashboardOpen: false,
   selectedRouteId: null,
 
   setStatus: (status) => set({ status }),
   setOrders: (orders) => set({ orders }),
   setIsRouteListOpen: (open) => set({ isRouteListOpen: open }),
+  setIsEfficiencyDashboardOpen: (open) => set({ isEfficiencyDashboardOpen: open }),
   setSelectedRouteId: (id) => set({ selectedRouteId: id }),
   setSimulationResults: (individual, bundled, metrics) =>
     set({

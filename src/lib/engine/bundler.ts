@@ -72,9 +72,9 @@ export function runBasicBundling(orders: Order[]): Order[][] {
     for (let j = i + 1; j < orders.length; j++) {
       if (usedIds.has(orders[j].id)) continue;
 
-      // 상차지 간 거리가 5km 이내인 경우 합짐 후보로 고려
+      // 상차지 간 거리가 8km 이내인 경우 합짐 후보로 고려 (합짐 밀도 향상)
       const dist = getHaversineDistance(orders[i].pickup, orders[j].pickup);
-      if (dist < 5000) {
+      if (dist < 8000) {
         const potentialBundle = [...currentBundle, orders[j]];
         
         // 하드 제약 조건 검증 (적재량)
@@ -84,7 +84,7 @@ export function runBasicBundling(orders: Order[]): Order[][] {
         }
       }
 
-      if (currentBundle.length >= 3) break; // 최대 3개까지 합짐
+      if (currentBundle.length >= 5) break; // 최대 5개까지 고밀도 합짐
     }
     bundles.push(currentBundle);
   }
@@ -119,12 +119,23 @@ export function findOptimalSequence(orders: Order[]): SequencePoint[] {
 
     for (let i = 0; i < remainingPoints.length; i++) {
       const nextPoint = remainingPoints[i];
+      const order = orders.find(o => o.id === nextPoint.id)!;
       
-      // 제약 조건: 하차(Dropoff)는 반드시 해당 주문의 상차(Pickup) 이후에만 가능
+      // 제약 조건 1: 하차(Dropoff)는 반드시 해당 주문의 상차(Pickup) 이후에만 가능
       if (nextPoint.type === "Dropoff") {
         const hasPickedUp = currentPath.some(p => p.id === nextPoint.id && p.type === "Pickup");
         if (!hasPickedUp) continue;
       }
+
+      // 제약 조건 2: 시간 순서 준수 (시간적 인과관계)
+      // 이전 지점의 시간(또는 현재 지점의 상차 가능 시간)이 다음 지점의 마감 시간보다 늦으면 안 됨
+      const lastPoint = currentPath[currentPath.length - 1];
+      const lastOrder = orders.find(o => o.id === lastPoint.id)!;
+      const lastTime = new Date(lastPoint.type === "Pickup" ? lastOrder.timeWindow.pickupAt : lastOrder.timeWindow.deadlineAt).getTime();
+      const nextTime = new Date(nextPoint.type === "Pickup" ? order.timeWindow.pickupAt : order.timeWindow.deadlineAt).getTime();
+
+      // 시간이 역전되는 경로는 배제 (단, 상차지는 어느 정도 유연성 허용 가능하나 여기선 엄격히 적용)
+      if (nextTime < lastTime) continue;
 
       const newPath = [...currentPath, nextPoint];
       const newRemaining = [...remainingPoints.slice(0, i), ...remainingPoints.slice(i + 1)];

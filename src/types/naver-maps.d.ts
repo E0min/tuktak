@@ -9,7 +9,9 @@ declare global {
     class Map {
       constructor(element: string | HTMLElement, options: MapOptions);
       setOptions(options: MapOptions): void;
-      panToBounds(bounds: LatLngBounds, padding?: Padding | number): void;
+      fitBounds(bounds: LatLngBounds, margin?: Margin | number): void;
+      panToBounds(bounds: LatLngBounds): void;
+      panTo(latlng: LatLng): void;
     }
     
     interface MapOptions {
@@ -21,7 +23,7 @@ declare global {
       };
     }
 
-    interface Padding {
+    interface Margin {
       top?: number;
       right?: number;
       bottom?: number;

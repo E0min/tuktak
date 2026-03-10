@@ -27,13 +27,17 @@ export function RouteCargoInventory({ orders, efficiency }: RouteCargoInventoryP
             <div className="flex justify-between items-start mb-2">
               <div className="flex items-center gap-2">
                 <div className="w-6 h-6 rounded bg-indigo-500/20 flex items-center justify-center text-[10px] font-bold text-indigo-400 border border-indigo-500/20">
-                  {idx + 1}
+                  {String.fromCharCode(65 + idx)}
                 </div>
                 <span className="text-xs font-black text-white">{getCategoryLabel(order.cargo.category)}</span>
               </div>
               <div className="text-right">
-                <span className="text-[9px] text-slate-500 block">화주 절감액</span>
-                <span className="text-[10px] text-emerald-400 font-bold">-{efficiency.shipperSavings[idx].toLocaleString()}원</span>
+                <p className="text-[11px] text-white font-black">
+                  {(order.basePrice - efficiency.shipperSavings[idx]).toLocaleString()}원
+                </p>
+                <p className="text-[9px] text-emerald-400 font-bold">
+                  -{efficiency.shipperSavings[idx].toLocaleString()}원 할인
+                </p>
               </div>
             </div>
             

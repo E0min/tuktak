@@ -77,18 +77,28 @@ export function RouteCard({ route, index, isExpanded, onToggle }: RouteCardProps
             className="overflow-hidden"
           >
             <div className="pt-4 border-t border-white/5 space-y-6">
-              <RouteMetricsComparison efficiency={efficiency} totalTime={route.totalTime} />
+              {/* Route Total Summary (Simplified) */}
+              <div className="bg-emerald-500/10 border border-emerald-500/20 p-4 rounded-2xl flex items-center justify-between">
+                <div>
+                  <p className="text-[10px] text-emerald-500 font-bold uppercase tracking-widest">Estimated Net Profit</p>
+                  <p className="text-2xl font-black text-white">{Math.round(efficiency.profitAfter).toLocaleString()}원</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-[10px] text-slate-500 font-bold uppercase">Efficiency</p>
+                  <p className="text-lg font-black text-emerald-400">+{Math.round(efficiency.profitIncreaseRate)}%</p>
+                </div>
+              </div>
               
               <div className="bg-emerald-500/5 border border-emerald-500/10 p-3 rounded-xl">
                 <h4 className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1">
                   <Coins size={12} /> 기사 수익성 정밀 분석
                 </h4>
                 <p className="text-[11px] text-slate-300 leading-relaxed">
-                  이 루트를 운행할 경우, 개별 건을 따로 잡을 때보다 시간당 수익이 
+                  이 묶음 배차를 완료할 경우, 개별 단일 건들을 따로 잡는 불확실한 대기 시간 없이 
                   <span className="text-emerald-400 font-black px-1 text-xs">
                     {Math.round(((efficiency.hourlyProfitAfter - efficiency.hourlyProfitBefore) / efficiency.hourlyProfitBefore) * 100)}%
                   </span> 
-                  증가합니다. (단독 {Math.round(efficiency.hourlyProfitBefore).toLocaleString()}원 → 합짐 {Math.round(efficiency.hourlyProfitAfter).toLocaleString()}원)
+                  높은 시간당 생산성을 확보할 수 있습니다.
                 </p>
               </div>
 

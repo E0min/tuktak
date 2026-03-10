@@ -67,34 +67,59 @@ export function useSimulation() {
 
       // 4-1. 최적 방문 순서 산출 (Dynamic Sequencing)
       const optimalSequence = findOptimalSequence(group);
+      const allPoints = optimalSequence.map(p => p.coordinate);
       
-      const start = optimalSequence[0].coordinate;
-      const goal = optimalSequence[optimalSequence.length - 1].coordinate;
-      // 시작과 끝을 제외한 모든 경유지
-      const waypoints = optimalSequence.slice(1, -1).map(p => p.coordinate);
+      // 4-2. 경로 분할 및 병합 (Bypass 5-waypoint limit)
+      let combinedPath: Coordinate[] = [];
+      let totalDistance = 0;
+      let totalDuration = 0;
+      const MAX_WAYPOINTS = 5;
+      const CHUNK_SIZE = MAX_WAYPOINTS + 1; // 한 번의 호출로 처리할 구간 (지점 수 - 1)
 
-      const direction = await getDirection(start, goal, waypoints);
-      
-      if (direction && direction.route && direction.route.traoptimal) {
-        const routeData = direction.route.traoptimal[0];
-        const path: Coordinate[] = routeData.path.map(([lng, lat]: [number, number]) => ({ lat, lng }));
+      try {
+        for (let j = 0; j < allPoints.length - 1; j += CHUNK_SIZE) {
+          const chunk = allPoints.slice(j, j + CHUNK_SIZE + 1);
+          if (chunk.length < 2) break;
+
+          const start = chunk[0];
+          const goal = chunk[chunk.length - 1];
+          const waypoints = chunk.slice(1, -1);
+
+          const direction = await getDirection(start, goal, waypoints);
+          
+          if (direction && direction.route && direction.route.traoptimal) {
+            const routeData = direction.route.traoptimal[0];
+            const segmentPath: Coordinate[] = routeData.path.map(([lng, lat]: [number, number]) => ({ lat, lng }));
+
+            // 경로 병합 (중복점 제거)
+            if (combinedPath.length > 0) {
+              combinedPath.push(...segmentPath.slice(1));
+            } else {
+              combinedPath.push(...segmentPath);
+            }
+
+            totalDistance += routeData.summary.distance;
+            totalDuration += routeData.summary.duration;
+          }
+        }
 
         bundledRoutes.push({
           id: `ROUTE-B-${i + 1}`,
           orders: group,
-          totalDistance: routeData.summary.distance,
-          totalTime: routeData.summary.duration / 1000,
-          pathPoints: path,
+          totalDistance: totalDistance,
+          totalTime: totalDuration / 1000,
+          pathPoints: combinedPath,
           type: "Bundled",
-          optimalSequence, // 시각화용 시퀀스 저장
+          optimalSequence,
         });
-      } else {
+      } catch (error) {
+        // API 호출 실패 시 직선 거리 Fallback
         bundledRoutes.push({
           id: `ROUTE-B-F-${i + 1}`,
           orders: group,
           totalDistance: 0,
           totalTime: 0,
-          pathPoints: [start, goal],
+          pathPoints: [allPoints[0], allPoints[allPoints.length - 1]],
           type: "Bundled",
           optimalSequence,
         });

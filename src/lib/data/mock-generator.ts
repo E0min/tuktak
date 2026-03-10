@@ -33,10 +33,10 @@ function getRandomCargo(): Cargo {
   ];
   const category = categories[Math.floor(Math.random() * categories.length)];
 
-  // 부피 점유율 (0.2 ~ 0.7)
-  const volume = parseFloat((Math.random() * 0.5 + 0.2).toFixed(2));
-  // 중량 (100kg ~ 800kg)
-  const weight = Math.floor(Math.random() * 700 + 100);
+  // 부피 점유율 (0.1 ~ 0.4) - 고밀도 합짐 시뮬레이션을 위해 하향 조정
+  const volume = parseFloat((Math.random() * 0.3 + 0.1).toFixed(2));
+  // 중량 (100kg ~ 400kg) - 부피에 맞춰 중량도 소폭 조정
+  const weight = Math.floor(Math.random() * 300 + 100);
 
   return { category, volume, weight };
 }
